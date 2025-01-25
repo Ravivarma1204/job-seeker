@@ -1,5 +1,31 @@
+# Flask framework and extensions
 Flask==2.1.2
 flask-cors==2.1.2
-werkzeug==2.1.0
+
+# Data handling
 pandas==1.5.3
-numpy==1.23.5
+numpy==1.24.2
+
+# Machine learning and text processing
+scikit-learn==1.2.2
+
+# For natural language processing or similar tasks (if used)
+nltk==3.8.1
+spacy==3.5.1
+
+# Database connectors (choose the relevant one based on your database)
+psycopg2-binary==2.9.6   # For PostgreSQL
+pymysql==1.0.3           # For MySQL
+
+# Others
+python-dateutil==2.9.0.post0
+pytz==2024.2
+
+# Deployment and WSGI server
+gunicorn==20.1.0         # WSGI HTTP server for production
+
+# If using environment variables
+python-dotenv==1.0.0
+
+# If handling APIs or external requests
+requests==2.31.0
