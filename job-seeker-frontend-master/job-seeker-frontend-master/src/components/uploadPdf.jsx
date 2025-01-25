@@ -29,7 +29,7 @@ const UploadPDF = ({ setJobs }) => {
 
     try {
       const response = await axios.post(
-        'http://127.0.0.1:5000/upload',
+        'https://job-seeker-backend-hume.onrender.com',
         formData
       );
       setJobs(response.data);
