@@ -1,26 +1,33 @@
-from flask import Flask, request
-from flask_cors import CORS, cross_origin
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from services.model import top_jobs
-from flask import jsonify
+
 app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+CORS(app)  # Enable CORS for all routes
+
 @app.route('/upload', methods=['POST'])
 def upload_pdf():
-    if 'pdfFile' not in request.files:
-        return 'No file part', 400
+    try:
+        # Check if a file is included in the request
+        if 'pdfFile' not in request.files:
+            return jsonify({'error': 'No file part in the request'}), 400
 
-    pdf_file = request.files['pdfFile']
-    pdf_file.save('pdf/sample.pdf')  # Change the path to your desired location
-    recommend_jobs=top_jobs()
-    recommend_jobs=[{'job_name':t[0],'job_link':t[1],'similarity':t[2]} for t in recommend_jobs]
-    return jsonify(recommend_jobs), 200
+        pdf_file = request.files['pdfFile']
+        
+        if pdf_file.filename == '':
+            return jsonify({'error': 'No file selected for uploading'}), 400
 
-@app.route('/')
-def home():
-    return "Hello, Render!"
+        # Save the uploaded PDF to a desired location
+        pdf_file.save('pdf/sample.pdf')  # Change the path to your desired location
+        
+        # Call your model to recommend jobs
+        recommend_jobs = top_jobs()
+        recommend_jobs = [{'job_name': t[0], 'job_link': t[1], 'similarity': t[2]} for t in recommend_jobs]
+
+        return jsonify(recommend_jobs), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    import os
-    port = int(os.environ.get("PORT", 5000))  # Get the port from the environment
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=5000)
