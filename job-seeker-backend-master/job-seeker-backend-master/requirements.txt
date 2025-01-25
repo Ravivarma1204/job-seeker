@@ -1,6 +1,6 @@
 # Flask framework and extensions
 Flask==2.1.2
-flask-cors==2.1.2
+flask-cors>=3.1.0
 
 # Data handling
 pandas==1.5.3
@@ -33,5 +33,3 @@ requests==2.31.0
 Werkzeug==2.0.3
 
 PyMuPDF
-
-flask-cors>=3.1.0
